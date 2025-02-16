@@ -1,0 +1,115 @@
+{
+  "name": "Reproduction Dev Container",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "devcontainer",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "features": {
+    // An unresolved bug in the Dev Containers CLI causes _REMOTE_USER_HOME
+    // to be empty. This in turn creates issues for installation of other
+    // Dev Container features. Most notably for this Dev Container, for the
+    // Azure CLI and the Bicep extension. Until issue #331 is resolved, one
+    // must install the Bicep extension with the postCreateCommand.
+    //
+    // https://github.com/devcontainers/cli/issues/331
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": "true",
+      "username": "vscode",
+      "userUid": "1000",
+      "userGid": "1000",
+      "upgradePackages": "true"
+    },
+    "ghcr.io/devcontainers/features/git:1": {
+      "version": "latest",
+      "ppa": "false"
+    },
+    "ghcr.io/devcontainers/features/azure-cli:1": {
+      "extensions": [
+        "azure-devops",
+        "account",
+        "containerapp",
+        "rdbms-connect"
+      ],
+      "version": "latest"
+    }
+  },
+  // TODO: Describe
+  "remoteEnv": {
+    // Example
+    // "SECRET_KEY": "${localEnv:SECRET_KEY}"
+  },
+  "postCreateCommand": "/bin/bash ./.devcontainer/postCreateCommand.sh > ~/postCreateCommand.log",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "JakeBecker.elixir-ls",
+        "mrorz.language-gettext",
+        "phoenixframework.phoenix",
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss",
+        "tomoki1207.pdf",
+        "redhat.vscode-yaml",
+        "matthewpi.caddyfile-support",
+        "samuel-pordeus.elixir-test",
+        "johnpapa.vscode-peacock",
+        "tamasfe.even-better-toml",
+        "foxundermoon.shell-format",
+        "IronGeek.vscode-env",
+        "mechatroner.rainbow-csv",
+        "ms-azuretools.vscode-docker",
+        "ms-python.python",
+        "humao.rest-client"
+      ],
+      "settings": {
+        "files.exclude": {
+          "**/.git": false
+        },
+        "editor.formatOnSave": true,
+        "emmet.includeLanguages": {
+          "phoenix-heex": "html"
+        },
+        "[json]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode",
+          "editor.quickSuggestions": {
+            "strings": true
+          },
+          "editor.suggest.insertMode": "replace"
+        },
+        "[jsonc]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode",
+          "editor.quickSuggestions": {
+            "strings": true
+          },
+          "editor.suggest.insertMode": "replace"
+        },
+        "[elixir]": {
+          "editor.defaultFormatter": "JakeBecker.elixir-ls",
+          "editor.insertSpaces": true,
+          "editor.tabSize": 2,
+          "editor.wordBasedSuggestions": "off",
+          "editor.formatOnType": true,
+          "editor.trimAutoWhitespace": false,
+          "editor.snippetSuggestions": "inline",
+          "files.trimTrailingWhitespace": true,
+          "files.insertFinalNewline": true,
+          "files.trimFinalNewlines": true
+        },
+        "[markdown]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode",
+          "editor.unicodeHighlight.ambiguousCharacters": true,
+          "editor.unicodeHighlight.invisibleCharacters": false,
+          "diffEditor.ignoreTrimWhitespace": false,
+          "editor.wordWrap": "on",
+          "editor.quickSuggestions": {
+            "comments": "off",
+            "strings": "off",
+            "other": "off"
+          }
+        },
+        "[javascript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        }
+      }
+    }
+  },
+  "remoteUser": "vscode"
+}
