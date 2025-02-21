@@ -3,8 +3,12 @@ defmodule Myapp.Accounts.User do
     otp_app: :myapp,
     domain: Myapp.Accounts,
     authorizers: [Ash.Policy.Authorizer],
-    extensions: [AshAuthentication],
+    extensions: [AshAuthentication, AshAdmin.Resource],
     data_layer: AshPostgres.DataLayer
+
+  admin do
+    actor? true
+  end
 
   authentication do
     add_ons do
@@ -228,6 +232,10 @@ defmodule Myapp.Accounts.User do
     policy always() do
       forbid_if always()
     end
+  end
+
+  multitenancy do
+    strategy :context
   end
 
   attributes do

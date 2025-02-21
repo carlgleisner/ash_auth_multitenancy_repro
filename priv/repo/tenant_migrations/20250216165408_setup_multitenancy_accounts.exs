@@ -1,4 +1,4 @@
-defmodule Myapp.Repo.Migrations.InitializeAndAddAuthenticationResourcesAndAddPasswordAuthenticationAndAddPasswordAuth do
+defmodule Myapp.Repo.TenantMigrations.SetupMultitenancyAccounts do
   @moduledoc """
   Updates resources based on their most recent snapshots.
 
@@ -8,7 +8,7 @@ defmodule Myapp.Repo.Migrations.InitializeAndAddAuthenticationResourcesAndAddPas
   use Ecto.Migration
 
   def up do
-    create table(:users, primary_key: false) do
+    create table(:users, primary_key: false, prefix: prefix()) do
       add :confirmed_at, :utc_datetime_usec
       add :id, :uuid, null: false, default: fragment("gen_random_uuid()"), primary_key: true
       add :email, :citext, null: false
@@ -17,7 +17,7 @@ defmodule Myapp.Repo.Migrations.InitializeAndAddAuthenticationResourcesAndAddPas
 
     create unique_index(:users, [:email], name: "users_unique_email_index")
 
-    create table(:tokens, primary_key: false) do
+    create table(:tokens, primary_key: false, prefix: prefix()) do
       add :created_at, :utc_datetime_usec,
         null: false,
         default: fragment("(now() AT TIME ZONE 'utc')")
@@ -39,10 +39,10 @@ defmodule Myapp.Repo.Migrations.InitializeAndAddAuthenticationResourcesAndAddPas
   end
 
   def down do
-    drop table(:tokens)
+    drop table(:tokens, prefix: prefix())
 
     drop_if_exists unique_index(:users, [:email], name: "users_unique_email_index")
 
-    drop table(:users)
+    drop table(:users, prefix: prefix())
   end
 end

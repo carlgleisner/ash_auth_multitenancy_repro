@@ -9,3 +9,7 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+
+Myapp.Accounts.Organization
+|> Ash.Changeset.for_create(:create, %{name: "NSA", subdomain: "nsa"})
+|> Ash.create!()

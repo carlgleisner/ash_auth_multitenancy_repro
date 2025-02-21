@@ -77,6 +77,10 @@ defmodule Myapp.Accounts.Token do
     end
   end
 
+  multitenancy do
+    strategy :context
+  end
+
   attributes do
     attribute :jti, :string do
       primary_key? true

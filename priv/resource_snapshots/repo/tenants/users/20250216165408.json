@@ -46,7 +46,7 @@
   "custom_indexes": [],
   "custom_statements": [],
   "has_create_action": true,
-  "hash": "A43A59F13B598ADD1668A78C33D15DFAD9101913CD2935D0C77222AE494C36F0",
+  "hash": "A4BF0DB2148894DE77B9BE7179828F196CA0B69A9F42C6BADB88413715F3F1B3",
   "identities": [
     {
       "all_tenants?": false,
@@ -65,8 +65,8 @@
   ],
   "multitenancy": {
     "attribute": null,
-    "global": null,
-    "strategy": null
+    "global": false,
+    "strategy": "context"
   },
   "repo": "Elixir.Myapp.Repo",
   "schema": null,

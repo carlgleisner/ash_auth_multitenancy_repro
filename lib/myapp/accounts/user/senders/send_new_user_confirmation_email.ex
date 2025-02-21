@@ -11,7 +11,10 @@ defmodule Myapp.Accounts.User.Senders.SendNewUserConfirmationEmail do
   alias Myapp.Mailer
 
   @impl true
-  def send(user, token, _) do
+  def send(user, token, opts) do
+    # Tenant should be in `opts` according to the documentation
+    opts |> dbg()
+
     new()
     # TODO: Replace with your email
     |> from({"noreply", "noreply@example.com"})
